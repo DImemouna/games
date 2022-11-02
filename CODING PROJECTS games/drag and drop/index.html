@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<title>Match That Tat</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+</head>
+
+<body>
+	<div class="logo"><img src="img/logo.png" alt=""></div>
+	<div id="overallCon"><!--big div-->
+<!--congrat ------------------------------------------------------------------------------------------------->
+		<div id="shareCon">
+				<p class="congrats">Congratulations!</p>
+				<a href="index.html"><button>Replay</button></a>
+				
+		</div>
+<!--instruction---------------------------------------------------------------------------------------------->
+			<div id="tatCone" class="order">
+			<div class="instruct"> <span> Drag and Drop </span><br><br>
+				Try to guess which percentage has been spent for each of the six following kind of expenses, in Europe, in 2018 (source: Eurostat). Eg: In 2018, on average,  12, 1 % of European people income was used to buy food and non-alcoholic beverages.
+				Drop the data with the right consumption purpose.</div>
+			</div>
+			<div style="clear:both"></div>
+
+<!--DROP TARGETS--------------------------------------------------------------------------------------------->
+		<div id="tatCon">
+
+			<div class="atattoo droppable" id="tmuhammad" data-id="5">
+				<div class="messagewrong">Incorrect. <br/>Try Again.</div>
+				<div class="messageright">Correct</div>
+				<img src="img/1.png" />
+        <div class="headcircleinside" id="muhammadinside"><img src="img/1pourcent.png" /></div>
+        
+      </div>
+			
+			
+
+			<div class="atattoo droppable" id="tbarrea" data-id="0">
+				<div class="messagewrong">Incorrect. <br/>Try Again.</div>
+				<div class="messageright">Correct</div>
+				<img src="img/2.png" />
+				<div class="headcircleinside" id="barreainside"><img src="img/2pourcent.png" /></div>
+			</div>
+
+			
+
+			<div class="atattoo droppable" id="tjohnson" data-id="3">
+				<div class="messagewrong">Incorrect. <br/>Try Again.</div>
+				<div class="messageright">Correct</div>
+				<img src="img/3.png" />
+				<div class="headcircleinside" id="johnsoninside"><img src="img/3pourcent.png" /></div>
+			</div>
+
+			
+			
+			<div class="atattoo droppable" id="tmartin" data-id="4">
+				<div class="messagewrong">Incorrect. <br/>Try Again.</div>
+				<div class="messageright">Correct</div>
+				<img src="img/4.png" />
+				<div class="headcircleinside" id="martininside"><img src="img/4pourcent.png" /></div>
+			</div>
+			
+			<div class="atattoo droppable" id="tpekovic" data-id="6">
+				<div class="messagewrong">Incorrect. <br/>Try Again.</div>
+				<div class="messageright">Correct</div>
+				<img src="img/5.png" />
+				<div class="headcircleinside" id="pekovicinside"><img src="img/5pourcent.png" /></div>
+			</div>
+			
+			<div class="atattoo droppable" id="tturiaf" data-id="8">
+				<div class="messagewrong">Incorrect. <br/>Try Again.</div>
+				<div class="messageright">Correct</div>
+				<img src="img/6.png" />
+				<div class="headcircleinside" id="turiafinside"><img src="img/6pourcent.png" /></div>
+			</div>
+
+			
+  </div>
+  
+ 
+<!--END DROP TARGETS--------------------------------------------------------------------------------------------------------->
+
+<!--DRAGGABLE THINGS--------------------------------------------------------------------------------------------------------->
+		<div id="headCon" class="droppable2">
+			<div class="headcircle draggable" id="hbarrea"><img src="img/2pourcent.png" /></div>
+			<div class="headcircle draggable" id="hjohnson"><img src="img/3pourcent.png" /></div>
+			<div class="headcircle draggable" id="hmartin"><img src="img/4pourcent.png" /></div>
+			<div class="headcircle draggable" id="hmuhammad"><img src="img/1pourcent.png" /></div>
+			<div class="headcircle draggable" id="hpekovic"><img src="img/5pourcent.png" /></div>
+			<div class="headcircle draggable" id="hturiaf"><img src="img/6pourcent.png" /></div>
+			
+		</div>
+<!--END DRAGGABLE THINGS------------------------------------------------------------------------------------------------------>
+
+
+	</div>
+
+	<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f6e2e6;
+}
+
+.logo {
+margin-left: 2%;
+ width: 50%;
+}
+.logo img{
+width: 80%;
+}
+
+#overallCon {
+  width: 100vw;
+  height: 80vh;
+}
+
+#headCon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#scoreCon {
+  width: 60%;
+
+  text-align: center;
+  margin: auto;
+}
+
+#tatCon {
+  width: 96%;
+  margin-left: 2%;
+  display: flex;
+  justify-content: space-between;
+  
+}
+#tatCon img {
+  width: 100%;
+  margin: 50px;
+}
+.order{
+  margin-left: 5%;
+  width: 50%;
+  margin-bottom: 1%;
+ 
+
+}
+
+
+.headcircle {
+  width: 70px;
+  font: 12px Arial;
+  text-align: center;
+  color: #666;
+  float: left;
+  margin: 0 15px 10px 0;
+  cursor: pointer;
+}
+.headcircle img {
+  margin-bottom: -4px;
+}
+
+.headcircleinside {
+  width: 10%;
+  margin: 10% 0 0 -5px;
+  position: absolute;
+  display: none;
+  cursor: pointer;
+}
+.headcircleinside img {
+  width: 100%;
+}
+
+.atattoo {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.messagewrong {
+  position: absolute;
+  margin: 5px;
+  font: bold 1.5rem Arial;
+  color: #cc0000;
+  text-shadow: 0 0 0.2em #fff, 0 0 0.2em #fff;
+  display: none;
+}
+.messageright {
+  position: absolute;
+  margin: 5px;
+  font: bold 1.5rem Arial;
+  color: #339933;
+  text-shadow: 0 0 0.2em #fff, 0 0 0.2em #fff;
+  display: none;
+}
+
+.instruct span {
+  font-size: 1.5rem;
+  color: #666;
+  padding: px 0;
+}
+
+.instruct {
+  font-size: 1.2rem;
+  color: #666;
+ 
+ 
+}
+
+.score {
+  font: bold 18px Arial;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.numDisp {
+  font: 18px Arial;
+  color: #333;
+}
+
+.boxHover {
+  opacity: 0.5;
+}
+
+#detail {
+  height: 450px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.75);
+  position: absolute;
+  top: 190px;
+  display: none;
+  z-index: 100;
+  opacity: 0;
+}
+
+#detail #detailCon {
+  width: 445px;
+  height: 350px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  -moz-box-shadow: 0 0 15px #999;
+  -webkit-box-shadow: 0 0 15px #999;
+  box-shadow: 0 0 15px #999;
+  top: 40px;
+  left: 70px;
+  padding: 15px;
+  position: relative;
+}
+
+#photoCon {
+  width: 250px;
+  height: 350px;
+  float: left;
+  margin-right: 20px;
+}
+
+#detail #closebtn {
+  font: bold 12px Arial, Sans Serif;
+  float: right;
+  color: #999;
+  border: 1px solid #ccc;
+  padding: 0 2px 0 2px;
+  cursor: pointer;
+}
+
+#desc {
+  font: 14px Arial;
+  margin-top: 25px;
+  color: #666;
+  padding-right: 20px;
+}
+
+.credits-con {
+  font: italic 11px Arial;
+  color: #999;
+  clear: both;
+  padding-top: 10px;
+}
+
+#shareCon {
+  padding-top: 50px;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  background-color: rgb(233, 204, 209);
+  width: 40%;
+  height: 400px;
+  text-align: center;
+  z-index: 2;
+  border-radius: 30px;
+  box-shadow: 10px 8px rgba(48, 46, 47, 0.111),
+    3px 8px 10px rgba(48, 47, 47, 0.111);
+}
+
+.congrats {
+  font-size: 2rem;
+  margin-bottom: 0px;
+  color: rgb(0, 0, 0);
+  margin: 50px;
+  margin-bottom: 90px;
+}
+
+button {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px 60px;
+  background: (247, 217, 222);
+  color: rgb(237, 125, 125);
+  border: thin solid rgba(148, 143, 143, 0.4);
+  border-radius: 10px;
+  box-shadow: 0px 4px rgb(213, 190, 194), 3px 8px 10px rgba(0, 0, 0, 0.2);
+  outline: none;
+  vertical-align: baseline;
+  background: rgb(247, 217, 222); /* Old browsers */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#37e537', endColorstr='#22dd22',GradientType=0 ); /* IE6-9 */
+}
+
+button:hover {
+  color: rgb(247, 217, 222);
+  transition: all 100ms ease;
+  background-color: rgb(247, 217, 222, 0.2);
+}
+button:active {
+  color: rgb(127, 225, 127);
+  box-shadow: 0 1px rgb(255, 255, 255), 1px 2px 2px rgba(255, 255, 255, 0.3);
+  transform: translateY(3px);
+  transition: none;
+}
+
+#headCon img {
+  width: 200%;
+}
+
+.description{
+  display: flex;
+  justify-content:center;
+  margin-top:-2%;
+}
+.description p{
+  margin-left: 55px;
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
+  font-size: 1.3rem;
+  text-align: center;
+  background: rgba(210, 105, 30, 0.124);
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+}
+	</style>
+
+	<script>
+var allNames = ['barrea','johnson', 'martin', 'muhammad', 'pekovic' , 'turiaf' ];
+
+var origXPos = [];
+var origYPos = [];
+var attempts = 0;
+var correct = 0;
+
+var captions = [];
+function tattoosInit() {
+	//console.log("ready");
+	
+	$("#shareCon").hide();/*------------------------------------------------------------ */
+
+	$( ".draggable" ).draggable({ revert: "valid" });
+	$( ".droppable" ).droppable({
+      hoverClass: "boxHover",
+      drop: function( event, ui ) {
+        $( this )
+         var dragid = ui.draggable.attr("id").substring(1, ui.draggable.attr("id").length);
+         var dropid = $(this).attr("id").substring(1, $(this).attr("id").length);
+         var dataid = $(this).attr("data-id")
+         if (dragid == dropid) {
+	   			$("#" + dragid + "inside").css("display", "block");
+				$("#t" + dropid + " .messageright").css("display", "inline").delay(1500).fadeOut( "slow" );
+				ui.draggable.css("visibility", "hidden");
+				attempts ++;
+				correct ++;
+				$("#numAttempts").text(attempts);
+				$("#numCorrect").text(correct);
+				showInfo(dataid);
+
+				$(this).click(function() {
+					showInfo(dataid);
+				});
+
+				if (correct == 6) {
+					$("shareBtns").html("hello world");
+					$("#shareCon").show();/*------------------------------------------------------------ */
+				}
+
+	         } else {
+	         	//console.log("wrong");
+	         	$("#t" + dropid + " .messagewrong").css("display", "inline").delay(1500).fadeOut( "slow" );
+	         	attempts ++;
+	         	$("#numAttempts").text(attempts);
+	         }
+      	}
+    });
+
+    $( ".droppable2" ).droppable();
+
+    
+
+} 
+
+function showInfo(which) {
+	
+	$("#desc").text(captions[which]);
+
+}
+$(document).ready(function() {
+	tattoosInit();
+
+});
+
+
+	</script>
+
+	
+
+   
+
+</body>
+
+</html>

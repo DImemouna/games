@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lan="en">
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+</head> 
+ <body> 
+
+    <div class="logo" ><img src="logo.png" alt=""></div>
+  <div class="quiz-container"> 
+   <div class="question-number"> 
+    <h3>Question <span class="question-num-value"></span> of <span class="total-question"></span></h3> 
+   </div> 
+   <div class="question"> 
+   </div> 
+   <div class="options"> 
+    <div id="0" class="option1" onclick="check(this)"></div> 
+    <div id="1" class="option2" onclick="check(this)"></div> 
+    <div id="2" class="option3" onclick="check(this)"></div> 
+    <div id="3" class="option4" onclick="check(this)"></div> 
+   </div> 
+   <div class="button"> 
+    <button type="button" class="btn" onclick="next()">Next Question</button> 
+   </div> 
+   <div class="answers-tracker"> 
+   </div> 
+  </div> 
+  <div class="quiz-over"> 
+   <div class="box"> 
+     <h1>Thank you for your participation !</h1>
+    <h1  class="none"> Weldone!!<br> Your Score is <span class="correct-answers"></span> answers out of <span class="total-question2"></span> questions. <br> That's <span class="percentage"></span> </h1> 
+    <button type="button" onclick="tryAgain()">Try Again</button> 
+   </div> 
+  </div> 
+
+
+
+  <style>body{
+    margin:0;
+    background-color: #f6e2e6;
+    background-repeat:no-repeat;
+    font-family: sans-serif;
+}
+*{
+    box-sizing: border-box;
+}
+.quiz-container{
+    max-width: 50%;
+    min-height:500px;
+    background-color: rgba(255, 255, 255, 0.186);
+    margin:40px auto;
+    border-radius:15px;
+    padding:30px;
+    
+}
+.quiz-container::after,.quiz-container::before{
+    content: '';
+    clear: both;
+    display: table;
+
+}
+.question-number,
+.question,
+.options,
+.button,
+.answers-tracker{
+ float: left;
+ width: 100%;
+}
+.question-number h3{
+    color:rgb(151, 13, 13);
+    border-bottom: 2px solid rgb(151, 13, 13);
+    margin:0;
+    padding-bottom:10px;
+}
+
+.question {
+    font-size:22px;
+    padding:20px 0;
+    color:rgb(151, 13, 13);
+    
+}
+
+.options div{
+  background-color: rgba(230, 157, 22, 0.528);
+  font-size:16px;
+  color:000000;
+  border-radius:10px;
+  padding:20px;
+  position: relative;
+  overflow:hidden;
+  cursor: pointer;
+  width: 100%;
+  margin:20px 30px 20px 2px;
+}
+.options div.disabled{
+    pointer-events: none;
+    margin:30px;
+}
+.options div.correct{
+    z-index: 1;
+    color: #fff;
+    margin:30px;
+}
+.options div.correct::before{
+    content: '';
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: green;
+    z-index: -1;
+    
+    animation: animateBackground 1s ease;
+    animation-fill-mode: forwards;
+}
+@keyframes animateBackground{
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+     transform: translateX(0%);    
+    }
+}
+.options div.wrong{
+    z-index: 1;
+    color: #fff;
+}
+.options div.wrong::before{
+    content: '';
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color:red;
+    z-index: -1;
+    
+    animation: animateBackground 1s ease;
+    animation-fill-mode: forwards;
+}
+@keyframes animateBackground{
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+     transform: translateX(0%);    
+    }
+}
+
+.button .btn{
+ padding:15px 50px;
+ border-radius:13px;
+ cursor: pointer;
+ background-color: rgb(0, 0, 0);
+ font-size:16px;
+ color:#ffffff;
+ border: none;
+ display: inline-block;
+ margin:15px 0 20px;
+ transition: 0.6;
+ transition-property: background, transform;
+}
+
+.button .btn:hover, .button .btn:focus, .button .btn:focus{
+    background: #04351E;
+    transform: scale(1.1);
+}
+.answers-tracker{
+    border-top:2px solid magenta;
+    padding-top: 15px;
+}
+.answers-tracker div{
+    height: 40px;
+    width: 40px;
+    background-color: #cccccc;
+    display: inline-block;
+    border-radius: 20%;
+    margin-right:5px;
+}
+
+.answers-tracker div.correct{
+    background-color: green;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 54%;
+
+}
+.answers-tracker div.wrong{
+    background-color: red;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+}
+
+.quiz-over{
+    position: fixed;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color:#f6e2e6;
+    z-index: 10;
+    display:none ;
+    align-items: center;
+    justify-content: center;
+}
+.quiz-over.show{
+    display: flex;
+}
+.quiz-over .box{
+    background-color: rgb(116, 28, 44);
+    padding:30px;
+    margin: 5% 0 0 4%;
+    border-radius:10px;
+    text-align: center;
+    width:50% ;
+    color:#ffffff;
+}
+
+.quiz-over .box h1{
+    font-size:36px;
+    margin:0 0 20px;
+}
+
+.quiz-over .box button{
+    padding:15px 50px;
+    border:none;
+    background-color: rgb(172, 115, 9) ;
+    border-radius:13px;
+    font-size:16px;
+    margin:15px 0 20px;
+    color:#ffffff;
+    transition: 0.6;
+    transition-property: background, transform;
+}
+
+.quiz-over button:hover, .quiz-over button:focus, .quiz-over button:focus{
+    background:116, 28, 44;
+    transform: scale(1.5);
+}
+.none{
+    display: none;
+}</style>
+
+
+  <script > const options = document.querySelector(".options").children;
+    const answerTrackerContainer = document.querySelector(".answers-tracker");
+    const questionNumberSpan = document.querySelector(".question-num-value");
+    const totalQuestionSpan = document.querySelector(".total-question");
+    const correctAnswerSpan = document.querySelector(".correct-answers");
+    const totalQuestionSpan2 = document.querySelector(".total-question2");
+    const percentage = document.querySelector(".percentage");
+    const question = document.querySelector(".question");
+    const op1 = document.querySelector(".option1");
+    const op2 = document.querySelector(".option2");
+    const op3 = document.querySelector(".option3");
+    const op4 = document.querySelector(".option4");
+    let questionIndex;
+    let index = 0;
+    let myArray = [];
+    let myArr = [];
+    let score = 0;
+    
+    // This section is for questions,options and answers arrays
+    
+    const questions = [
+      {
+        q:
+          "When is the World’s Savings Day? ",
+        options: ["a) 31st November", 
+                  "b) 31st October", 
+                   "c) 31st December", 
+                   "d) 31st January"],
+        answer: 1,
+      },
+    
+      {
+        q:
+          "What is the Barter system? ",
+        options: ["a) The Barter system is an age-old method that was adopted by people to exchange their services and goods. This system has been in practice for centuries before the invention of money. People used to exchange their goods or services for other goods or services in return.",
+                  "b) Metal tool money, such as knife and spade monies, which was also first used in China. These early metal monies developed into primitive versions of round coins. Chinese coins were made out of base metals, often containing holes so they could be put together like a chain.", 
+                  "c) The Barter system is an aged-old method which consisted in exchanging goods thanks to a system of paper, which has been used for decades.", 
+                  "d) The use of coins just before our current societies"],
+        answer: 0,
+      },
+      {
+        q: "Which civilization was the first to devise a system of paper money? ",
+        options: ["a) India, in approximately 250",
+                 "b) The Persian, in approximately 660 ",
+                 "c) China, in approximately 500 B.C",
+                 "d)Europe, in the region called Lydia (modern-day Western Turkey), in approximately 600 B.C"],
+        answer: 3,
+      },
+      {
+        q: "What is the Bitcoin",
+        options: [
+          "a) Bitcoin is a digital currency created in January 2009 by the mysterious and pseudonymous Satoshi Nakamoto. The identity of the person or persons who created the technology is still a mystery.",
+          "b) Bitcoin is a gold currency created in September 2000 by the mysterious and pseudonymous Natoshi Kanamoto. The identity of the person or persons who created the technology is still a mystery.",
+          "c) Bitcoin is a silver currency created in March 2008 which aimed to find an alternative to the gold and digital existing systems.",
+          "d) Bitcoin is a virtual currency created in August 2000 by an anonymous group which aims to make money unmaterial.",
+        ],
+        answer: 0,
+      },
+      {
+        q: "Which was the first region of the world to use an industrial facility to manufacture coins?",
+        options: ["a) India, in approximately 250 ", 
+                  "b) China, in approximately 500 B.C",
+                  "c) Persian Empire, in approximately 600", 
+                  "d) Europe, in the region called Lydia (modern-day Western Turkey), in approximately 600 B.C"],
+        answer: 3,
+      },
+      {
+        q: "What is the Gold standard?",
+        options: [
+          "a) wrong questionThe Gold standard is a monetary system which was previously used by Ancient civilizations.",
+          "b)The gold standard is a monetary system where a country's currency or paper money has a value directly linked to gold. With the gold standard, countries agreed to convert paper money into a fixed amount of gold. The gold standard is not currently used by any government’",
+          "c)The gold standard is a digital system where a country's currency or paper money has a value directly linked to gold. With the gold standard, countries agreed to convert paper money into a fixed amount of gold",
+          "d)The Gold standard is a monetary system used at the same extent as the Silver standard and influences the economy.",
+        ],
+        answer: 1,
+      },
+    ];
+    
+    //setting of questions, options and question numbers
+    
+    totalQuestionSpan.innerHTML = questions.length;
+    function load() {
+      questionNumberSpan.innerHTML = index + 1;
+      question.innerHTML = questions[questionIndex].q;
+      op1.innerHTML = questions[questionIndex].options[0];
+      op2.innerHTML = questions[questionIndex].options[1];
+      op3.innerHTML = questions[questionIndex].options[2];
+      op4.innerHTML = questions[questionIndex].options[3];
+      index++;
+    }
+    
+    function check(element) {
+      if (element.id == questions[questionIndex].answer) {
+        element.classList.add("correct");
+        updateAnswerTracker("correct");
+        score++;
+        console.log("score:" + score);
+      } else {
+        element.classList.add("wrong");
+        updateAnswerTracker("wrong");
+      }
+      disabledOptions();
+    }
+    
+    function disabledOptions() {
+      for (let i = 0; i < options.length; i++) {
+        options[i].classList.add("disabled");
+        if (options[i].id == questions[questionIndex].answer) {
+          options[i].classList.add("correct");
+        }
+      }
+    }
+    
+    function enableOptions() {
+      for (let i = 0; i < options.length; i++) {
+        options[i].classList.remove("disabled", "correct", "wrong");
+      }
+    }
+    
+    function validate() {
+      if (!options[0].classList.contains("disabled")) {
+        alert("Please Selecto one option");
+      } else {
+        enableOptions();
+        randomQuestion();
+      }
+    }
+    
+    function next() {
+      validate();
+    }
+    
+    function randomQuestion() {
+      let randomNumber = Math.floor(Math.random() * questions.length);
+      let hitDuplicate = 0;
+      if (index == questions.length) {
+        quizOver();
+      } else {
+        if (myArray.length > 0) {
+          for (let i = 0; i < myArray.length; i++) {
+            if (myArray[i] == randomNumber) {
+              hitDuplicate = 1;
+              break;
+            }
+          }
+          if (hitDuplicate == 1) {
+            randomQuestion();
+          } else {
+            questionIndex = randomNumber;
+            load();
+            myArr.push(questionIndex);
+          }
+        }
+        if (myArray.length == 0) {
+          questionIndex = randomNumber;
+          load();
+          myArr.push(questionIndex);
+        }
+    
+        myArray.push(randomNumber);
+      }
+    }
+    
+    function answerTrakcer() {
+      for (let i = 0; i < questions.length; i++) {
+        const div = document.createElement("div");
+        answerTrackerContainer.appendChild(div);
+      }
+    }
+    
+    function updateAnswerTracker(classNam) {
+      answerTrackerContainer.children[index - 1].classList.add(classNam);
+    }
+    
+    function quizOver() {
+      document.querySelector(".quiz-over").classList.add("show");
+      correctAnswerSpan.innerHTML = score;
+      totalQuestionSpan2.innerHTML = questions.length;
+      percentage.innerHTML = (score / questions.length) * 10 + "%";
+    }
+    
+    function tryAgain() {
+      window.location.reload();
+    }
+    
+    window.onload = function () {
+      randomQuestion();
+      answerTrakcer();
+    };
+    </script> 
+ </body>
+</html>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

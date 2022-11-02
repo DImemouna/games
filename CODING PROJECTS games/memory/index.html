@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="logo"><img src="img/logo1.png" alt=""></div>
+    <header class="header">
+          
+        <h1>Why do people save money for?</h1>
+        <p>There will be 8 pairs of images with the reasons people save money. <br>
+             Each time you find a pair, you will have reason. </p>
+    </header>
+    <div class="container">     
+        <section class="score-panel">
+                 <ul id="star-rating" class="star-rating">
+                <li class="star"> <i class="fa fa-star"></i></li>
+                <li class="star"> <i class="fa fa-star"></i></li>
+                <li class="star"> <i class="fa fa-star"></i></li>
+            </ul>
+        <span class="moves-counter">0</span> 
+        <div class="timer-container">
+            <span class="timer"><i class="fa fa-hourglass-start"></i> timer: 00:00</span>
+        </div>
+        <div class="reset">
+            <button class="btn reset-btn"> Reset <i class="fa fa-repeat"></i> </button>
+        </div>
+</section>
+ 
+
+<!--modal-->
+
+<section class="win-game-modal">
+    <div id="modal" class="modal">
+
+    <!--modal content-->
+    <div class="modal-content">
+        <span class="close"&times;></span>
+        <h2>Congratulations</h2>
+       
+        <button class="btn play-again-btn"> play Again?</button>
+        
+
+    </div>
+    </div>
+
+</section>
+
+<div id="">
+    <div id="detailCon">
+        <div id="closebtn">X</div>
+        <div id="photoCon"></div>
+        <div id="desc"></div>
+    </div>
+</div>
+
+
+<ul class="deck"></ul>
+</div>
+<style>
+    *{
+    margin: 0;
+    padding: 0; 
+    }
+*,
+*::before,
+*::after{
+    box-sizing: inherit;
+}
+html{
+    box-sizing: border-box;
+}
+body{
+    background-color: #f6e2e6;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 62.5%;
+    letter-spacing: 1.4;
+    margin: 0;
+    text-align: center;
+}
+
+.logo {
+ width: 50%;
+}
+.logo img{
+width: 70%;
+margin-right: 15%;
+}
+
+.container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0.5em;
+
+}
+ul > li {
+    cursor: pointer;
+}
+.btn{
+    border-radius: 1em;
+    border: none;
+    color: khaki;
+    box-shadow: 5px 2px 20px 0 lightcoral;
+    padding: 0.8em;
+}
+h1{
+    font-size: 1.5em;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 5%;
+    padding-bottom:10px;
+}
+
+
+p{
+    font-size: 1.5em;
+    text-align: left;
+    margin-left: 5%;
+}
+
+.score-panel{
+    font-size: 1.4em;
+    padding: 1em 0 2em;
+    display: flex;
+    justify-content: space-around;
+  
+}
+.star-rating >li{
+    display: inline-block;
+    padding: 0.5em;
+}
+.moves-counter{
+  margin-top: 13px;  
+   
+}
+
+.reset-btn{
+    background-color: brown;
+}
+.timer-container{
+   
+    color:black;
+    margin: 0.5em;
+    padding: 5px;
+}
+.timer{
+    font-size: 1em;
+}
+ .modal{
+     display:none ;
+     position: fixed;
+     z-index: 99;
+     left: 0;
+     top:0;
+     width: 100%;
+     height:100%;
+     background-color:#f6e2e65b;
+     
+ }
+ .modal-content{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     background-color: #f6e2e6;
+     margin:10% auto 0 auto;
+     border: 0.8em solid whitesmoke;
+     padding-right: 2em;
+     width: 70%;
+     height: 60%;
+
+ }
+.close{
+    align-self: flex-end;
+    color:black;
+    font-size: 5rem;
+    
+}
+.close:hover,
+.close:focus{
+    color: rgba(240, 163, 201, 0.604);
+    text-decoration: none;
+    cursor: pointer;
+}
+ modal-img{
+     display: inline-block;
+     margin: 1em 0 1em;
+     width: 20em;
+ }
+ p.stats{
+     font-weight: 600;
+ }
+ p.stats:last-child{
+     margin-bottom: 1em;
+ }
+
+.play-again-btn{
+    background:#680719;
+    margin-top: 1em;
+    color: white;
+    padding: 10px 40px;
+    margin-bottom: 10px;
+}
+
+.deck{
+    background: linear-gradient(to botom,#f6e2e644,#f6e2e677);
+    border-radius:1.5em;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    height: 35em;
+    margin-bottom: 6em;
+    padding:0.5em;
+    width: 35em;
+    }
+
+    .deck,
+    .card{
+        box-shadow: 5px 2px 20px 0 rgba(242, 225, 227, 0.385);
+    }
+    .card{
+        background:rgb(97, 17, 27);
+        border-radius:0.5em;
+        height: 10em;
+        width: 7em;
+
+    }
+    img{
+        user-select: none;
+        width: 6em;
+    }
+    .deck img{
+        visibility: hidden;
+    }
+    .deck .card.flip{
+        background: white;
+        cursor: default;
+        transform: rotate(0deg);
+        transition: transform 0.3s linear;
+        pointer-events: none;
+    }
+
+    .flip img {
+        background:#f6e2e66c;
+        visibility:visible;
+        cursor: pointer;
+        animation: pulse 1s;
+    }
+    .match img{
+        background: tomato;
+    }
+    @keyframes pulse{
+        0%{
+            transform: scale(0.5);
+        }
+
+        80%{
+            transform: scale(1.1);
+        }
+        100%{
+            transform: scale(0.5);
+        }
+        
+    }
+@media screen and (min-width:550px) {
+    .deck{
+        height: 50em;
+        padding: 2em;
+        width: 50em;
+    }
+
+    .card{
+        height: 10em;
+        width: 10em;
+    }
+    .deck img{
+        width: 9em;
+    }
+    .modal-content h2{
+        font-size: 4em;
+    }
+    .play-again-btn{
+        font-size: 1.8em;
+    }
+    
+}
+@media screen and (min-width:800px) {
+    h1{
+        font-size: 3em;
+    }
+    p{
+        font-size: 2.1em;
+    }
+    .deck{
+    height: 70em;
+    width: 70em;
+}
+.card{
+    height: 15em;
+    width: 15em;
+}
+.deck img {
+    width: 13em;
+}
+.reset-btn{
+    font-size: 0.8em;
+}
+.footer{
+    font-size: 1.2em;
+}
+.modal-img{
+    width: 30em;
+}
+.play-again-btn{
+    font-size: 2em;
+}    
+}
+</style>
+<script>
+    // array of deck of card Images
+    const deckCards = ["2.png","2.png","3.png","3.png","4.png","4.png","5.png","5.png"
+                        ,"6.png","6.png","7.png","7.png","8.png","8.png","9.png","9.png"];
+
+var allimg = ['2','3','4','5','6','7','8','9']
+
+var captions = [];
+captions[0] = "A tattoo on the chest of Minnesota Timberwolves J.J. Barea. \"S.J.\" are the initials for his son Sebastian Jose. \"I love my son, he's the most important thing in my life,\" said Barea.";
+captions[1] = "Tattoo on the arm of Minnesota Timberwolves Corey Brewer. \"Trust is very important,\" said Brewer.";
+captions[2] = "A tattoo on the shoulder of Minnesota Timberwolves Dante Cunningham. It's a mixture of his astrological sign Taurus with tribal symbols in honor of his great grandmother who was Native American.";
+captions[3] = "Tattoo on the arm of Minnesota Timberwolves Chris Johnson. \"My mom passed away when I was ten\" he said. \"It's a symbol of how much she meant to me, I'm living through her name.\"";
+captions[4] = "The untattooed arm of Minnesota Timberwolves Kevin Martin. Asked why he doesn't have any tattoos, \"I'm just a simple boring Midwest guy,\" he said.";
+captions[5] = "Tattoo of an image of his mother playing basketball on the arm of Minnesota Timberwolves Shabazz Muhammad. \"It's two angels symbolizing my mom playing basketball in college and high school.\"";
+captions[6] = "Tattoo of a Serbian warrior standing a pile of skulls on the arm of Minnesota Timberwolves Nikola Pekovic.";
+captions[7] = "Tattoo of a symbol for \"friendship\" on the wrist of Minnesota Timberwolves Ricky Rubio.";
+captions[8] = "A tattoo of a phoenix rising on the arm of Ronny Turiaf. \"It symbolizes dying and reliving and getting better as a human being all the time,\" he said.";
+captions[9] = "Tattoo of a lion on the arm of Minnesota Timberwolves  Derrick Williams. \"All my tattoos are of Greco-Roman statues,\" said Williams. \"I love lions, they have that look, they're always on tack, you always have to have that mentality.\"";
+
+const deck = document.querySelector(".deck");
+//create an empty array to store the opened cards
+let opened = [];
+
+// created an empty array to store the matched cards
+let matched = [];
+
+//Access the modal
+const modal = document.getElementById("modal")
+
+// access the reset button 
+const reset = document.querySelector(".reset-btn");
+
+//access the play again button
+const playAgain = document.querySelector(".play-again-btn");
+
+//select the class moves-counter and change it's HTML
+const movesCount=document.querySelector(".moves-counter");
+
+//Create variable for moves counter , start the counr a zero
+let moves = 0;
+
+const star = document.getElementById("star-rating").querySelectorAll(".star");
+let starCount = 3 ;
+const timeCounter = document.querySelector(".timer");
+let time;
+let minutes = 0;
+let seconds = 0;
+let timeStart = false;
+
+function shuffle(array){
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    while (currentIndex !==0){
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1 ;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex]= temporaryValue;
+    }
+    return array;
+}
+
+function startGame(){
+    $("#detail").hide();
+    // invoke shuffle function and store in variable
+    const shuffledDeck = shuffle(deckCards);
+
+    //Iterate over dack of cards array
+    for (let i = 0; i < shuffledDeck.length; i++){
+        // create the <li > tags
+        const liTag = document.createElement('LI');
+
+        // give <li> class of card
+        liTag.classList.add('card');
+
+        //Create the <img> tags
+        const addImage = document.createElement("IMG");
+
+        //append <img > to <li>
+        liTag.appendChild(addImage);
+
+        //Set the img src path with the shuffled deck
+        addImage.setAttribute("src", "img/" + shuffledDeck[i]);
+
+        //add an alt tag to the image
+       // addImage.setAttribute(alt,"image of vault boy fo")
+        // update thr new <li> ti the deck <ul>
+
+        deck.appendChild(liTag);
+    }
+   
+}
+
+
+startGame();
+function removeCard(){
+    while (deck.hasChildNodes()){
+        deck.removeChild(deck.firstChild);
+    }
+}
+
+function timer(){
+    time = setInterval(function(){
+        seconds++;
+        if (seconds === 60){
+            minutes++;
+            seconds = 0;
+        }
+        timeCounter.innerHTML="<i class = 'fa fa-hourglass-start'></i>" + 
+        "Timer:" +minutes + "Mins" + seconds + "Secs" ;
+    },1000);
+}
+function stopTime(){
+    clearInterval(time);
+}
+
+function resetEverything(){
+    stopTime();
+    timeStart = false;
+    seconds = 0;
+    minutes = 0 ;
+
+    timeCounter.innerHTML = "<i class='fa fa-hourglass-start'></i>" + 
+    "Timer: 00:00";
+
+    //Reset star count and the add the class back ti show stars again
+
+    star[1].firstElementChild.classList.add("fa-star");
+    star[2].firstElementChild.classList.add("fa-star");
+    starCount = 3;
+
+    // Reset moves count and reset its inner HTML
+
+    moves = 0;
+
+    movesCount.innerHTML = 0;
+    //clear both arrays that hold the opened and matched cards 
+    matched = [];
+    opened = [];
+//clear the deck
+
+removeCard();
+
+//create a now deck
+startGame();
+}
+
+function movesCounter(){
+    movesCount.innerHTML ++;
+    moves ++;
+}
+
+function starRating(){
+    if(moves === 14){
+        star[2].firstElementChild.classList.remove("fa-star");
+        starCount--;
+    }
+
+    if(moves === 18){
+        star[1].firstElementChild.classList.remove("fa-star");
+        starCount--;
+    }
+}
+
+
+/* compare two cards to see if they maech or not*/
+function compareTwo(){
+    var dataid = $(this).attr("data-id")
+    //When there are 2 cards in the opened array
+    if (opened.length === 2){
+        document.body.style.pointerEvents = "none";
+    }
+    if(opened.length === 2 && opened[0].src === opened[1].src){
+        match();
+        console.log("la ca match"); 
+        showInfo(dataid);
+        
+    }
+
+    else if (opened.length === 2 && opened[0].src  != opened[1].src){
+        noMatch();
+
+    }
+    $("#detail").click(function() {
+		$("#detail").hide();
+		$("#detail").animate({ opacity: '0' }, 500);
+	});
+}
+
+function showInfo(which) {
+	$("#detail").show();
+	$("#detail").animate({ opacity: '1' }, 500);
+	$("#detail #desc").text(captions[which]);
+
+	var img = new Image();
+    img.src = "img" + allimg[which] + ".png";
+	
+	$("#detail #photoCon").empty();
+	$("#detail #photoCon").append(img);
+
+
+}
+
+function match(){
+    setTimeout(function(){
+        opened[0].parentElement.classList.add("match");
+        opened[1].parentElement.classList.add("match");
+        matched.push(...opened);
+        document.body.style.pointerEvents = "auto";
+        winGame();
+        opened = [];
+    },600)
+
+    movesCounter();
+    starRating();
+}
+
+function noMatch(){
+    setTimeout(function(){
+        opened[0].parentElement.classList.remove("flip");
+        opened[1].parentElement.classList.remove("flip");
+        document.body.style.pointerEvents="auto";
+        opened =[];
+
+    },1500);
+    movesCounter();
+    starRating();
+}
+
+function AddStats(){
+    const stats = document.querySelector(".modal-content");
+    for(let i=1; i<=3; i++) {
+        const statsElement = document.createElement("p");
+        statsElement.classList.add("stats");
+        stats.appendChild(statsElement);
+    }
+    let p = stats.querySelectorAll("p.stats");
+
+    p[0].innerHTML = "Time to complete:" + minutes +"Minutes and " +
+    seconds + "Seconds";
+
+    p[1].innerHTML = "Moves Taken:" + moves;
+    p[2].innerHTML = "Your star rating is :" + starCount + "out of 3";
+}
+
+function displayModal(){
+    const modalClose = document.getElementsByClassName("close")[0];
+
+    modal.style.display="block";
+
+    modalClose.onclick = function(){
+
+    modal.style.display ="none";
+    };
+
+    window.onclick = function(event){
+        if(event.target == modal){
+            modal.style.display = "none";
+
+        }
+    };
+}
+
+function winGame(){
+    if (matched.length === 16){
+        stopTime();
+        AddStats();
+        displayModal();
+
+    }
+}
+deck.addEventListener("click",function(evt){
+    if(evt.target.nodeName === "LI"){
+       
+        if (timeStart===false){
+            timeStart = true;
+            timer();
+        }
+        flipCard();
+
+    }
+
+    function flipCard(){
+        evt.target.classList.add("flip");
+        addToOpened();
+    }
+
+    function addToOpened(){
+        if (opened.length === 0 || opened.length === 1){
+            opened.push(evt.target.firstElementChild);
+        }
+        
+        compareTwo();
+    }
+});
+
+reset.addEventListener('click',resetEverything);
+playAgain.addEventListener('click',function(){
+    modal.style.display = "none";
+    resetEverything();
+});
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
